@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:weightSum="100"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff">
+    <TextView
+        android:padding="10dp"
+        android:id="@+id/serch_start"
+        android:layout_marginTop="50dp"
+        android:text="Where you want to start"
+        android:paddingLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:textSize="20dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:textColor="#666666"
+        android:background="@drawable/serch_bar_bg"/>
+    <TextView
+        android:id="@+id/serch_end"
+        android:paddingLeft="20dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:text="Where you want to end"
+        android:padding="10dp"
+        android:textSize="20dp"
+        android:textColor="#666666"
+        android:layout_height="wrap_content"
+        android:background="@drawable/serch_bar_bg"/>
+    <RelativeLayout
+        android:layout_weight="100"
+        android:layout_marginTop="10dp"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/route_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <ProgressBar
+            android:id="@+id/serch_progressbar"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foregroundGravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+        <TextView
+            android:id="@+id/serch_result_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No routes Available in this locations "
+            android:textColor="#FC0000"
+            android:textSize="20dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+    <Button
+        android:id="@+id/create_route"
+        android:layout_margin="10dp"
+        android:text="cannot find your route create one"
+        android:layout_width="match_parent"
+        android:background="@drawable/serch_bar_bg"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

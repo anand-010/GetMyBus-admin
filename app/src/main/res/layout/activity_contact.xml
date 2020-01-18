@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:gravity="center"
+    android:weightSum="100"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.ContactActivity">
+    <LinearLayout
+        android:weightSum="100"
+        android:layout_weight="60"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical">
+        <Button
+            android:background="#7EDF78"
+            android:layout_margin="10dp"
+            android:layout_weight="50"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="Report a problem"/>
+        <Button
+            android:background="#F0E149"
+            android:layout_margin="10dp"
+            android:layout_weight="50"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="Call us via internet"/>
+    </LinearLayout>
+</LinearLayout>
