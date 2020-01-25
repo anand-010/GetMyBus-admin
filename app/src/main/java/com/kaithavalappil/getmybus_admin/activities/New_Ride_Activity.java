@@ -11,13 +11,18 @@ import android.graphics.Color;
 
 import androidx.annotation.NonNull;
 
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.kaithavalappil.getmybus_admin.DataIntermediate.SoureDestPoint;
 import com.kaithavalappil.getmybus_admin.R;
+import com.kaithavalappil.getmybus_admin.activities.utlils.NearestPoint;
+import com.kaithavalappil.getmybus_admin.helper.FirebaseDbNewRide;
 import com.mapbox.api.directions.v5.DirectionsCriteria;
 import com.mapbox.api.directions.v5.MapboxDirections;
 import com.mapbox.api.directions.v5.models.DirectionsResponse;
@@ -37,7 +42,6 @@ import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.PlaceAutocomplete;
-import com.mapbox.mapboxsdk.plugins.places.autocomplete.model.PlaceOptions;
 import com.mapbox.mapboxsdk.style.layers.LineLayer;
 import com.mapbox.mapboxsdk.style.layers.Property;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
@@ -61,11 +65,10 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineJoin;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineWidth;
 import static com.mapbox.core.constants.Constants.PRECISION_6;
 import com.mapbox.mapboxsdk.plugins.annotation.OnSymbolDragListener;
-import com.mapbox.mapboxsdk.plugins.annotation.OnSymbolLongClickListener;
 import com.mapbox.mapboxsdk.plugins.annotation.SymbolManager;
 import com.mapbox.mapboxsdk.plugins.annotation.SymbolOptions;
 import com.mapbox.mapboxsdk.plugins.annotation.Symbol;
-import com.mapbox.mapboxsdk.plugins.annotation.OnSymbolClickListener;
+
 /**
  * Use the places plugin to take advantage of Mapbox's location search ("geocoding") capabilities. The plugin
  * automatically makes geocoding requests, has built-in saved locations, includes location picker functionality,
@@ -83,6 +86,7 @@ public class New_Ride_Activity extends AppCompatActivity implements OnMapReadyCa
     private String symbolIconId = "symbolIconId";
     private final String ROUTE_LAYER_ID = "route-layer-id";
     private static final String ROUTE_SOURCE_ID = "route-source-id";
+    private static final String MY_POINT_ID = "my-point-id";
     private static final String ICON_LAYER_ID = "icon-layer-id";
     private static final String ICON_SOURCE_ID = "icon-source-id";
     private static final String RED_PIN_ICON_ID = "red-pin-icon-id";
@@ -95,9 +99,12 @@ public class New_Ride_Activity extends AppCompatActivity implements OnMapReadyCa
     private ImageView add_location;
 
     //    this is draggable addition
-    private static final String MAKI_ICON_CAFE = "cafe-15";
-    private static final String MAKI_ICON_HARBOR = "harbor-15";
-    private static final String MAKI_ICON_AIRPORT = "airport-15";
+    private static final String MAKI_ICON_PlUS = "hospital-15";
+//    private static final String MAKI_ICON_CAFE = "cafe-15";
+//    private static final String MAKI_ICON_HARBOR = "harbor-15";
+//    private static final String MAKI_ICON_AIRPORT = "airport-15";
+    Feature nearest_point;
+    List<Point> polyline;
     private SymbolManager symbolManager;
     List<Symbol> symbol_list = new ArrayList<>();
     List<Point> waypoint_list = new ArrayList<>();
@@ -113,42 +120,57 @@ public class New_Ride_Activity extends AppCompatActivity implements OnMapReadyCa
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
-        add_location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Symbol symbol = symbolManager.create(new SymbolOptions()
-                        .withLatLng(new LatLng(mapboxMap.getCameraPosition().target.getLatitude(), mapboxMap.getCameraPosition().target.getLongitude()))
-                        .withIconImage(MAKI_ICON_HARBOR)
-                        .withIconSize(2.0f)
-                        .withDraggable(true));
-                symbol_list.add(symbol);
-                waypoint_list.add(Point.fromLngLat(mapboxMap.getCameraPosition().target.getLongitude(),mapboxMap.getCameraPosition().target.getLatitude()));
-                getRoute(mapboxMap, mysource, mydestination,waypoint_list);
-            }
+        add_location.setOnClickListener(v -> {
+            Symbol symbol = symbolManager.create(new SymbolOptions()
+                    .withLatLng(new LatLng(mapboxMap.getCameraPosition().target.getLatitude(), mapboxMap.getCameraPosition().target.getLongitude()))
+                    .withIconImage(MAKI_ICON_PlUS)
+                    .withIconSize(2.0f)
+                    .withDraggable(true));
+            symbol_list.add(symbol);
+            waypoint_list.add(Point.fromLngLat(mapboxMap.getCameraPosition().target.getLongitude(),mapboxMap.getCameraPosition().target.getLatitude()));
+            getRoute(mapboxMap, mysource, mydestination,waypoint_list);
+        });
+        FirebaseDbNewRide db = new FirebaseDbNewRide(New_Ride_Activity.this);
+        findViewById(R.id.continue_btn).setOnClickListener(v -> {
+            if (polyline!=null)
+                if (polyline.size()>0){
+                    db.putData(polyline);
+                }
+//            todo need to add upload ith to database
         });
     }
 
     @Override
     public void onMapReady(@NonNull final MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
-        mapboxMap.addOnMapClickListener(point -> false);
+        mapboxMap.addOnMapClickListener(point -> {
+            NearestPoint np = new NearestPoint();
+            if (polyline != null){
+                Feature feature =np.getNearestPoint(point,polyline);
+
+//                Toast.makeText(this,feature.toJson().toString(),Toast.LENGTH_SHORT).show();
+
+
+                Log.d("May i", "onMapReady: "+feature.toJson());
+//                todo add points to the two points and then draw a dotted line
+            }
+
+            return false;
+        });
         mapboxMap.setStyle(Style.MAPBOX_STREETS, style -> {
-
             //        draggable test
-            // Set up a SymbolManager instance
             symbolManager = new SymbolManager(mapView, mapboxMap, style);
-
             symbolManager.setIconAllowOverlap(true);
             symbolManager.setTextAllowOverlap(true);
             symbolManager.addClickListener(symbol -> {
                 Toast.makeText(New_Ride_Activity.this,"clicked", Toast.LENGTH_SHORT).show();
-                symbol.setIconImage(MAKI_ICON_CAFE);
+                symbol.setIconColor("blue");
                 symbolManager.update(symbol);
             });
 // Add long click listener and change the symbol to an airport icon on long click
             symbolManager.addLongClickListener((symbol -> {
                 Toast.makeText(New_Ride_Activity.this,"long clicked", Toast.LENGTH_SHORT).show();
-                symbol.setIconImage(MAKI_ICON_AIRPORT);
+                symbol.setIconColor("red");
                 symbolManager.update(symbol);
             }));
             symbolManager.addDragListener(new OnSymbolDragListener() {
@@ -186,7 +208,6 @@ public class New_Ride_Activity extends AppCompatActivity implements OnMapReadyCa
                                     .target(new LatLng(mysource.latitude(),mysource.longitude()))
                                     .zoom(14)
                                     .build()), 4000);
-            initSearchFab();
             // Add the symbol layer icon to map for future use
             style.addImage(symbolIconId, BitmapFactory.decodeResource(
                     New_Ride_Activity.this.getResources(), R.drawable.mapbox_marker_icon_default));
@@ -194,24 +215,6 @@ public class New_Ride_Activity extends AppCompatActivity implements OnMapReadyCa
             setUpSource(style);
             // Set up a new symbol layer for displaying the searched location's feature coordinates
             setupLayer(style);
-        });
-    }
-    private void initSearchFab() {
-        findViewById(R.id.fab_location_search).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Intent intent = new PlaceAutocomplete.IntentBuilder()
-//                        .accessToken(Mapbox.getAccessToken() != null ? Mapbox.getAccessToken() : "pk.eyJ1IjoiYW5hbmQ5Mjg4IiwiYSI6ImNrNHk2dHJpdDA3dHEzZm82Y2hnY252cjEifQ.W-3fm0taJg_noVA_zzJO7g")
-//                        .placeOptions(PlaceOptions.builder()
-//                                .backgroundColor(Color.parseColor("#EEEEEE"))
-//                                .limit(10)
-//                                .addInjectedFeature(home)
-//                                .addInjectedFeature(work)
-//                                .build(PlaceOptions.MODE_CARDS))
-//                        .build(New_Ride_Activity.this);
-//                startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
-                Toast.makeText(New_Ride_Activity.this,"this is where next activity starts",Toast.LENGTH_SHORT).show();
-            }
         });
     }
     private void setUpSource(@NonNull Style loadedMapStyle) {
@@ -383,7 +386,7 @@ public class New_Ride_Activity extends AppCompatActivity implements OnMapReadyCa
                 currentRoute = response.body().routes().get(0);
 // Make a toast which displays the route's distance
 //                this is the list of points
-                List<Point> list= PolylineUtils.decode(currentRoute.geometry(),PRECISION_6);
+                polyline = PolylineUtils.decode(currentRoute.geometry(),PRECISION_6);
                 if (mapboxMap != null) {
                     mapboxMap.getStyle(new Style.OnStyleLoaded() {
                         @Override

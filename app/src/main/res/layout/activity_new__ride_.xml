@@ -11,17 +11,6 @@
         mapbox:mapbox_cameraTargetLng="-43.334931"
         mapbox:mapbox_cameraZoom="0.346515"
         />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_location_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:tint="@android:color/white"
-        app:backgroundTint="@color/colorPrimary"
-        app:srcCompat="@android:drawable/ic_search_category_default" />
     <ImageView
         android:id="@+id/add_location"
         android:layout_width="60dp"
@@ -29,5 +18,12 @@
         android:src="@drawable/ic_add_location_black_24dp"
         android:layout_alignParentBottom="true"
         android:layout_margin="30dp"/>
-
+<ImageButton
+    android:id="@+id/continue_btn"
+    android:layout_margin="10dp"
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:background="@drawable/tick"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentRight="true"/>
 </RelativeLayout>

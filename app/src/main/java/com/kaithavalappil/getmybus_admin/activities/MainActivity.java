@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     }).check();
         } else if (R.id.contact == v.getId()) {
+            startActivity(new Intent(MainActivity.this,ContactActivity.class));
 
         } else if (R.id.create_ride == v.getId()) {
             startActivity(new Intent(MainActivity.this,Serch_Ride.class));

@@ -14,6 +14,5 @@ public class Next_stop_activity extends AppCompatActivity {
         setContentView(R.layout.activity_next_stop_activity);
         recyclerView = findViewById(R.id.recycler_view);
 //        todo add the algorithmn from the user application
-
     }
 }
