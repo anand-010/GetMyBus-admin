@@ -5,14 +5,20 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.kaithavalappil.getmybus_admin.DataIntermediate.BusDetails;
+import com.kaithavalappil.getmybus_admin.DataIntermediate.SerchRecyclerLData;
 import com.kaithavalappil.getmybus_admin.DataIntermediate.SoureDestPoint;
 import com.kaithavalappil.getmybus_admin.R;
+import com.kaithavalappil.getmybus_admin.adapters.SerchRecyclerviewAdapter;
 import com.king.zxing.Intents;
 import com.mapbox.api.geocoding.v5.models.CarmenFeature;
 import com.mapbox.geojson.Point;
@@ -20,12 +26,18 @@ import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.PlaceAutocomplete;
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.model.PlaceOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Serch_Ride extends AppCompatActivity {
     Intent intent;
     int requestCode = 106;
     int requestCode2 = 107;
-    TextView serch_start,serch_end;
+    TextView serch_start,serch_end,serch_result;
+    ProgressBar progressBar;
     Point mysource,mydestination;
+    RecyclerView recyclerView;
+    List<SerchRecyclerLData> serchRecyclerLData = new ArrayList<>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +45,27 @@ public class Serch_Ride extends AppCompatActivity {
         setMapboxApi();
         initializeSerchIntent();
         setClickListeners();
+        serch_result = findViewById(R.id.serch_result_textview);
+        progressBar = findViewById(R.id.serch_progressbar);
+//        todo need to do set the progressbar and the textview message
+        serchRecyclerLData.add(new SerchRecyclerLData("Route name : anand","From : alappuzha ", "To : Cherthala"));
+        serchRecyclerLData.add(new SerchRecyclerLData("Route name : anand","From : alappuzha ", "To : Cherthala"));
+        serchRecyclerLData.add(new SerchRecyclerLData("Route name : anand","From : alappuzha ", "To : Cherthala"));
+        serchRecyclerLData.add(new SerchRecyclerLData("Route name : anand","From : alappuzha ", "To : Cherthala"));
+        serchRecyclerLData.add(new SerchRecyclerLData("Route name : anand","From : alappuzha ", "To : Cherthala"));
+        serchRecyclerLData.add(new SerchRecyclerLData("Route name : anand","From : alappuzha ", "To : Cherthala"));
+        serchRecyclerLData.add(new SerchRecyclerLData("Route name : anand","From : alappuzha ", "To : Cherthala"));
+        serchRecyclerLData.add(new SerchRecyclerLData("Route name : anand","From : alappuzha ", "To : Cherthala"));
+        serchRecyclerLData.add(new SerchRecyclerLData("Route name : anand","From : alappuzha ", "To : Cherthala"));
+        serchRecyclerLData.add(new SerchRecyclerLData("Route name : anand","From : alappuzha ", "To : Cherthala"));
+        SerchRecyclerviewAdapter serchRecyclerviewAdapter = new SerchRecyclerviewAdapter(this,serchRecyclerLData);
+        LinearLayoutManager lm = new LinearLayoutManager(this, RecyclerView.VERTICAL,false);
+        recyclerView = findViewById(R.id.route_recycler_view);
+        recyclerView.setLayoutManager(lm);
+        recyclerView.setAdapter(serchRecyclerviewAdapter);
+        if (serchRecyclerLData.size()>0){
+            serch_result.setVisibility(View.GONE);
+        }
     }
 
     private void setMapboxApi() {
@@ -92,7 +125,7 @@ public class Serch_Ride extends AppCompatActivity {
             mysource = Point.fromLngLat(((Point) selectedCarmenFeature.geometry()).longitude(),
                     ((Point) selectedCarmenFeature.geometry()).latitude());
             serch_start.setText(selectedCarmenFeature.placeName());
-
+            BusDetails.setSrc(selectedCarmenFeature.placeName());
 
         }
         if (resultCode == Activity.RESULT_OK && requestCode == this.requestCode2) {
@@ -102,7 +135,7 @@ public class Serch_Ride extends AppCompatActivity {
             mydestination = Point.fromLngLat(((Point) selectedCarmenFeature.geometry()).longitude(),
                     ((Point) selectedCarmenFeature.geometry()).latitude());
             serch_end.setText(selectedCarmenFeature.placeName());
-
+            BusDetails.setDest(selectedCarmenFeature.placeName());
 
         }
     }

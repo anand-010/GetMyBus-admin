@@ -1,5 +1,4 @@
-package com.kaithavalappil.getmybus_admin.activities.utlils;
-
+package com.kaithavalappil.getmybus_admin.utlils;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.geometry.LatLng;
