@@ -13,9 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.NewrideConformation"></activity>
+        <activity android:name=".activities.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.MyRide" />
+        <activity android:name=".activities.NewrideConformation" />
         <activity android:name=".activities.Next_stop_activity" />
         <activity android:name=".activities.ContactActivity" />
+        <activity android:name=".activities.ConcessionResult" />
         <activity android:name="com.google.android.libraries.places.widget.AutocompleteActivity" />
         <activity
             android:name="com.king.zxing.CaptureActivity"

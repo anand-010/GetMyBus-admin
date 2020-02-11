@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.NewrideConformation"
+    android:background="#3681D1">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="MissingConstraints">
+        <LinearLayout
+            android:layout_centerVertical="true"
+            android:id="@+id/select_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingTop="30dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="30dp">
+
+            <TextView
+                android:id="@+id/find_bus_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="30dp"
+                android:text="Your ride starts from"
+                android:textColor="#50ABDE"
+                android:textSize="30sp" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/serch_background"
+                android:weightSum="100">
+                <TextView
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:layout_weight="100"
+                    android:id="@+id/src_act_main"
+                    android:gravity="center_vertical"
+                    android:elevation="6dp"
+                    android:descendantFocusability="beforeDescendants"
+                    android:focusableInTouchMode="true"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="#00000000"
+                    android:hint="From : source"
+                    android:paddingLeft="20dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="30dp"
+                    android:textColorHint="#A8FFFFFF"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="100"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/bus_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bus ID"
+                        android:textSize="20dp"
+                        android:textColor="#B0FFFFFF"/>
+                    <TextView
+                        android:id="@+id/bus_Type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bus Type"
+                        android:textSize="20dp"
+                        android:textColor="#B0FFFFFF"/>
+                    <TextView
+                        android:id="@+id/bus_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Starting time"
+                        android:textSize="20dp"
+                        android:textColor="#B0FFFFFF"/>
+                    <TextView
+                        android:id="@+id/bus_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bus name"
+                        android:textSize="20dp"
+                        android:textColor="#B0FFFFFF"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/hide_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingTop="20dp"
+                android:text="Your ride ends at"
+                android:textColor="#50ABDE"
+                android:textSize="20dp"
+                />
+
+            <TextView
+                android:id="@+id/dest_act_main"
+                android:gravity="center_vertical"
+                android:elevation="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/serch_background"
+                android:descendantFocusability="beforeDescendants"
+                android:focusableInTouchMode="true"
+                android:hint="To : destination"
+                android:paddingLeft="20dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#A8FFFFFF"
+                android:textSize="30dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                />
+            <Button
+                android:id="@+id/cancel_ride"
+                android:padding="25dp"
+                android:background="@drawable/cancel_ride_bg"
+                android:text="CANCEL RIDE"
+                android:textSize="20dp"
+                android:layout_marginTop="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

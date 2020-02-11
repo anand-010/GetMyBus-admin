@@ -67,9 +67,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(MainActivity.this,Serch_Ride.class));
 
         } else if (R.id.my_list == v.getId()) {
+            startActivity(new Intent(MainActivity.this, MyRide.class));
 
         } else if (R.id.next_stop == v.getId()) {
-
+            startActivity(new Intent(MainActivity.this , Next_stop_activity.class));
         }
     }
     @Override

@@ -1,5 +1,6 @@
 package com.kaithavalappil.getmybus_admin.activities;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
@@ -11,6 +12,13 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.SuccessContinuation;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.kaithavalappil.getmybus_admin.R;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -82,6 +90,20 @@ public class Qrcode_activity extends AppCompatActivity {
                 // get String data from Intent
                 String returnString = data.getStringExtra(Intents.Scan.RESULT);
                 Toast.makeText(this,returnString,Toast.LENGTH_SHORT).show();
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("concession").whereEqualTo("id",1000).get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                Toast.makeText(Qrcode_activity.this,"oh good",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                db.collection("concession").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        Toast.makeText(Qrcode_activity.this,"concession called",Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         }
     }
