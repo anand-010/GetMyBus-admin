@@ -44,6 +44,7 @@ public class Qrcode_activity extends AppCompatActivity {
         bt2 = findViewById(R.id.scan_btn);
 
 
+
         final Context context = Qrcode_activity.this;
 
         Dexter.withActivity(this).withPermission(Manifest.permission.CAMERA)
@@ -98,12 +99,7 @@ public class Qrcode_activity extends AppCompatActivity {
                                 Toast.makeText(Qrcode_activity.this,"oh good",Toast.LENGTH_SHORT).show();
                             }
                         });
-                db.collection("concession").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        Toast.makeText(Qrcode_activity.this,"concession called",Toast.LENGTH_SHORT).show();
-                    }
-                });
+
             }
         }
     }

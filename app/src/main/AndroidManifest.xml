@@ -33,13 +33,5 @@
         <activity android:name=".activities.Serch_Ride" />
         <activity android:name=".activities.Qrcode_activity" />
         <activity android:name=".activities.New_Ride_Activity" />
-        <activity android:name=".activities.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
-
 </manifest>

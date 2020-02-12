@@ -10,6 +10,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.kaithavalappil.getmybus_admin.R;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -19,6 +23,8 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.king.zxing.CaptureActivity;
 import com.king.zxing.Intents;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private LinearLayout scan_id,contact,create_ride,my_list,next_stop;
@@ -83,6 +89,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // get String data from Intent
                 String returnString = data.getStringExtra(Intents.Scan.RESULT);
                 Toast.makeText(this,returnString,Toast.LENGTH_SHORT).show();
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("concession").whereEqualTo("id",returnString).get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                Toast.makeText(MainActivity.this,"found",Toast.LENGTH_SHORT).show();
+                                List<DocumentSnapshot> ds = queryDocumentSnapshots.getDocuments();
+                                Toast.makeText(MainActivity.this,String.valueOf(ds.size()),Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(MainActivity.this, ConcessionResult.class);
+                                for(DocumentSnapshot dps: ds){
+                                    intent.putExtra("name",dps.getString("name"));
+                                    intent.putExtra("from",dps.getString("from"));
+                                    intent.putExtra("to",dps.getString("to"));
+                                    startActivity(intent);
+                                }
+
+                            }
+                        });
             }
         }
     }
