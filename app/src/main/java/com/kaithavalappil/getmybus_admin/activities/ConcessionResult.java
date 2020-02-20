@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
+import com.bumptech.glide.Glide;
 import com.kaithavalappil.getmybus_admin.R;
 
 import java.util.ArrayList;
@@ -18,7 +20,8 @@ import java.util.Date;
 import java.util.List;
 
 public class ConcessionResult extends AppCompatActivity {
-    TextView from ,to , name;
+    TextView from ,to , name, age, institution;
+    ImageView profile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,9 +40,18 @@ public class ConcessionResult extends AppCompatActivity {
         from = findViewById(R.id.from);
         to = findViewById(R.id.to);
         name = findViewById(R.id.name);
+        age = findViewById(R.id.age);
+        institution = findViewById(R.id.institution);
+        profile = findViewById(R.id.profile);
         Intent intent = getIntent();
         name.setText("NAME :"+ intent.getStringExtra("name"));
         from.setText("FROM :"+ intent.getStringExtra("from"));
         to.setText("TO :"+ intent.getStringExtra("to"));
+        age.setText("AGE :"+ intent.getStringExtra("age"));
+        institution.setText("INSTITUTION :"+ intent.getStringExtra("institution"));
+        Glide
+                .with(ConcessionResult.this)
+                .load(intent.getStringExtra("url"))
+                .into(profile);
     }
 }

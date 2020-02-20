@@ -159,16 +159,12 @@ public class New_Ride_Activity extends AppCompatActivity implements OnMapReadyCa
         FirebaseDbNewRide db = new FirebaseDbNewRide(New_Ride_Activity.this,mysource,mydestination);
         Double totoal = mysource.latitude()+mysource.longitude()+mydestination.latitude()+mydestination.longitude();
         String text = String.valueOf(totoal);
-        final HashCode hashCode = Hashing.sha256().hashString(text, Charset.defaultCharset());
         findViewById(R.id.continue_btn).setOnClickListener(v -> {
-            if (polyline!=null)
-                if (polyline.size()>0){
-//                    db.putData(polyline);
+            if (polyline!=null && stops_list!=null)
+                if (polyline.size()>0 && stops_list.size()>0 ){
+                    db.putData(polyline, stops_list,mysource,mydestination,"my places");
                 }
-                if (stops_list.size()>0){
-//                    db.putStops(stops_list);
-                }
-            BusDetails.setBusDetails(450,"Kl0478",2,new GeoPoint(polyline.get(0).latitude(),polyline.get(0).longitude()),hashCode.toString());
+            BusDetails.setBusDetails(new GeoPoint(polyline.get(0).latitude(),polyline.get(0).longitude()));
                 startActivity(new Intent(New_Ride_Activity.this, NewrideConformation.class));
 //            todo need to add upload ith to database
         });

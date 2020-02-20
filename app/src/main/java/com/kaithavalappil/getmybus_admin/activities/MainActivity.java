@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -14,6 +15,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.kaithavalappil.getmybus_admin.DataIntermediate.BusDetails;
+import com.kaithavalappil.getmybus_admin.DataIntermediate.SharedPrefData;
 import com.kaithavalappil.getmybus_admin.R;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -23,6 +26,7 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.king.zxing.CaptureActivity;
 import com.king.zxing.Intents;
+import com.mapbox.api.directions.v5.MapboxDirections.Builder;
 
 import java.util.List;
 
@@ -44,6 +48,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         create_ride.setOnClickListener(this);
         my_list.setOnClickListener(this);
         next_stop.setOnClickListener(this);
+//        adding shared prefference to main activity
+        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+        int highScore = sharedPref.getInt("value", 1);
+        int bus_id = sharedPref.getInt("busid", 1);
+        String bus_name = sharedPref.getString("bus_name", "testname");
+        String email = sharedPref.getString("email", "testmail");
+        boolean first = sharedPref.getBoolean("first", true);
+        if (highScore ==1 && bus_id==1){
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("value", 7894);
+            editor.putBoolean("first", true);
+            editor.putInt("busid",640);
+//            todo test value
+            BusDetails.setBusId(640);
+            BusDetails.setBusType(2);
+            BusDetails.setBusNumber("dfsdf");
+            SharedPrefData.setBusname("testname");
+            SharedPrefData.setEmail("testmail");
+            editor.commit();
+        }
+        else {
+            Toast.makeText(MainActivity.this,"already exist",Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this,String.valueOf(highScore)+ "  "+bus_id,Toast.LENGTH_SHORT).show();
+//            SharedPrefData.setBusid(bus_id);
+            BusDetails.setBusId(bus_id);
+            BusDetails.setBusType(2);
+            BusDetails.setBusNumber("dfsdf");
+            SharedPrefData.setBusname(bus_name);
+            SharedPrefData.setEmail(email);
+        }
+
     }
 
     @Override
@@ -102,6 +137,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     intent.putExtra("name",dps.getString("name"));
                                     intent.putExtra("from",dps.getString("from"));
                                     intent.putExtra("to",dps.getString("to"));
+                                    intent.putExtra("age",dps.getString("age"));
+                                    intent.putExtra("institution",dps.getString("institution"));
+                                    intent.putExtra("url",dps.getString("url"));
                                     startActivity(intent);
                                 }
 

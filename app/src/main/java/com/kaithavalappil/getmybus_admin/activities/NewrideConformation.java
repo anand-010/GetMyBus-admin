@@ -15,6 +15,7 @@ import com.kaithavalappil.getmybus_admin.helper.FirebaseRideConfomed;
 public class NewrideConformation extends AppCompatActivity {
     TextView src,dest,busId,busName,launcTime,bustype;
     ImageView continue_btn;
+    String route_id="myid";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +29,7 @@ public class NewrideConformation extends AppCompatActivity {
         continue_btn = findViewById(R.id.continue_new_ride);
         src.setText(BusDetails.getSource());
         dest.setText(BusDetails.getDest());
+//        todo only one value is get from the serch
         busId.setText("Bus id : "+BusDetails.getBusId());
         busName.setText("Bus Name : my bus");
         launcTime.setText("Launch Time : 14.0 pm");
@@ -36,7 +38,7 @@ public class NewrideConformation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseRideConfomed db = new FirebaseRideConfomed();
-                db.setupRide(NewrideConformation.this);
+                db.setupRide(NewrideConformation.this,route_id);
             }
         });
     }

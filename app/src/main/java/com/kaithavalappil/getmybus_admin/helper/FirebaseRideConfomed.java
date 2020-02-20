@@ -21,17 +21,19 @@ import java.util.Map;
 public class FirebaseRideConfomed {
     DocumentReference database_refferance;
     DocumentReference route_refferance;
-
+    FirebaseFirestore db;
     public FirebaseRideConfomed() {
         // Access a Cloud Firestore instance from your Activity
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
         // Add a new document with a generated ID
         route_refferance = db.collection("rides").document(String.valueOf(BusDetails.getBusId()));
-        database_refferance = db.collection("users").document(BusDetails.getHashcode());
+
+//        todo add where equal to query to find the all bus from star point to end point
     }
-    public void setupRide(Context context){
+    public void setupRide(Context context, String doc_id){
 //        todo need to be downloading the road, stops data points
 //        database_refferance.set();
+        database_refferance = db.collection("users").document(doc_id);
         Toast.makeText(context,"funtion called",Toast.LENGTH_SHORT).show();
         database_refferance.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override

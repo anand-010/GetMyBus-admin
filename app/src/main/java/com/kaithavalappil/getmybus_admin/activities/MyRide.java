@@ -40,7 +40,9 @@ public class MyRide extends AppCompatActivity {
 //                            db.collection("rides").document(doc).delete();
 //                        }
 //                    });
+                    Toast.makeText(MyRide.this,doc,Toast.LENGTH_SHORT).show();
                     db.collection("rides").document(doc).delete();
+//                    todo need to be set bus id in shared prefferance
                 }
             }
         });
