@@ -58,6 +58,16 @@ public class ConcessionResult extends AppCompatActivity {
         long number = intent.getLongExtra("tripno",1);
         String document = intent.getStringExtra("document_id");
         DocumentReference db = FirebaseFirestore.getInstance().collection("concession").document(document);
+        if (number == 1){
+
+        }
+        else if (number == 2){
+            journey.setText("Mark backward Journey");
+        }
+        else if (number > 2){
+            journey.setText("No Journey Available");
+        }
+
         journey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
