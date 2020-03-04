@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,12 +22,26 @@ import com.kaithavalappil.getmybus_admin.R;
 
 public class MyRide extends AppCompatActivity {
     Button cancel_ride;
+    TextView src, dest, bus_id, bus_type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_ride);
+        src = findViewById(R.id.src_myride);
+        dest = findViewById(R.id.src_mydest);
+        bus_id = findViewById(R.id.bus_id);
+        bus_type = findViewById(R.id.bus_Type);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String doc= String.valueOf(BusDetails.getBusId());
+        FirebaseFirestore.getInstance().collection("rides").document(String.valueOf(BusDetails.getBusId())).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                src.setText(documentSnapshot.getString("source_name"));
+                dest.setText(documentSnapshot.getString("dest_name"));
+                bus_id.setText(String.valueOf(documentSnapshot.getLong("bus_id")));
+                bus_type.setText(String.valueOf(documentSnapshot.getLong("bus_type")));
+            }
+        });
         cancel_ride = findViewById(R.id.cancel_ride);
         cancel_ride.setOnClickListener(new View.OnClickListener() {
             @Override

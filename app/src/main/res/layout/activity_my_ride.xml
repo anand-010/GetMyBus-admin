@@ -40,7 +40,7 @@
                     android:paddingBottom="10dp"
                     android:paddingTop="10dp"
                     android:layout_weight="100"
-                    android:id="@+id/src_act_main"
+                    android:id="@+id/src_myride"
                     android:gravity="center_vertical"
                     android:elevation="6dp"
                     android:descendantFocusability="beforeDescendants"
@@ -107,7 +107,7 @@
                 />
 
             <TextView
-                android:id="@+id/dest_act_main"
+                android:id="@+id/src_mydest"
                 android:gravity="center_vertical"
                 android:elevation="6dp"
                 android:layout_width="match_parent"

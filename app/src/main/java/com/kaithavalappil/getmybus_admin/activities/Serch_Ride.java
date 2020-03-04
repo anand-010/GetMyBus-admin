@@ -129,11 +129,13 @@ public class Serch_Ride extends AppCompatActivity {
             serch_start.setText(selectedCarmenFeature.placeName());
             BusDetails.setSrc(selectedCarmenFeature.placeName());
             if (mysource !=null && mydestination!=null){
+                progressBar.setVisibility(View.VISIBLE);
                 cr.whereEqualTo("start", new GeoPoint(mysource.latitude(), mysource.longitude())).
                         whereEqualTo("end", new GeoPoint(mydestination.latitude(), mydestination.longitude())).addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                        progressBar.setVisibility(View.GONE);
                         if (list.size()>0){
                             serchRecyclerLData.clear();
                             for (DocumentSnapshot item : list){
@@ -151,6 +153,7 @@ public class Serch_Ride extends AppCompatActivity {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                        progressBar.setVisibility(View.GONE);
                         if (list.size()>0){
                             serchRecyclerLData.clear();
                             for (DocumentSnapshot item : list){
@@ -176,11 +179,13 @@ public class Serch_Ride extends AppCompatActivity {
             serch_end.setText(selectedCarmenFeature.placeName());
             BusDetails.setDest(selectedCarmenFeature.placeName());
             if (mysource !=null && mydestination!=null){
+                progressBar.setVisibility(View.VISIBLE);
                 cr.whereEqualTo("start", new GeoPoint(mysource.latitude(), mysource.longitude())).
                         whereEqualTo("end", new GeoPoint(mydestination.latitude(), mydestination.longitude())).addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                        progressBar.setVisibility(View.GONE);
                         if (list.size()>0){
                             serchRecyclerLData.clear();
                             for (DocumentSnapshot item : list){
@@ -196,6 +201,7 @@ public class Serch_Ride extends AppCompatActivity {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                        progressBar.setVisibility(View.GONE);
                         if (list.size()>0){
                             serchRecyclerLData.clear();
                             for (DocumentSnapshot item : list){

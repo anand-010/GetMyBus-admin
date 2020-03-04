@@ -70,7 +70,7 @@ public class FirebaseRideConfomed {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         List<String> stopnames = (List<String>) documentSnapshot.get("routes");
-                        mydt.put("route_id",RouteId.getRote_id());
+                        mydt.put("route_id",doc_id);
                         mydt.put("stopnames",stopnames);
                         mydt.put("percent",0);
                         mydt.put("position", new GeoPoint(routes.get(0).getLatitude(),routes.get(0).getLongitude()));

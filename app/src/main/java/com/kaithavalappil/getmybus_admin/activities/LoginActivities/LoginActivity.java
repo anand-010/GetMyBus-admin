@@ -71,10 +71,12 @@ public class LoginActivity extends AppCompatActivity {
                                                     Random r = new Random();
                                                     int i1 = r.nextInt(9999 - 0) + 0;
                                                     params.put("bus_id", i1);
+                                                    finish();
                                                     db.collection("uid").document(authResult.getUser().getUid()).set(params);
                                                     startActivity(new Intent(LoginActivity.this, MainActivity.class).putExtra("value", i1));
                                                 } else {
                                                     Toast.makeText(LoginActivity.this, String.valueOf(bus_id), Toast.LENGTH_SHORT).show();
+                                                    finish();
                                                     startActivity(new Intent(LoginActivity.this, MainActivity.class).putExtra("value", bus_id));
                                                 }
                                             }

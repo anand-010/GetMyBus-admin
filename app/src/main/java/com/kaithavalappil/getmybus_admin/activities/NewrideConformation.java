@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.kaithavalappil.getmybus_admin.DataIntermediate.BusDetails;
 import com.kaithavalappil.getmybus_admin.DataIntermediate.RouteId;
 import com.kaithavalappil.getmybus_admin.DataIntermediate.SoureDestPoint;
@@ -67,6 +70,13 @@ public class NewrideConformation extends AppCompatActivity {
                 FirebaseRideConfomed db = new FirebaseRideConfomed();
                 Toast.makeText(NewrideConformation.this,"r id is :"+route_id,Toast.LENGTH_SHORT).show();
                 db.setupRide(NewrideConformation.this,route_id);
+            }
+        });
+        FirebaseFirestore.getInstance().collection("users").document(route_id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                src.setText(documentSnapshot.getString("source_name"));
+                dest.setText(documentSnapshot.getString("dest_name"));
             }
         });
     }

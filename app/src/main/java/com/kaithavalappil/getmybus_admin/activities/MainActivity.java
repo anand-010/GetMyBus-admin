@@ -61,19 +61,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String email = sharedPref.getString("email", "testmail");
         boolean first = sharedPref.getBoolean("first", true);
         if (bus_id==1){
-            if (i == 1)
+            if (i == 1){
+                finish();
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt("value", i.intValue());
-            editor.putBoolean("first", true);
-            editor.putInt("busid",i.intValue());
+            }
+            else {
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("value", i.intValue());
+                editor.putBoolean("first", true);
+                editor.putInt("busid",i.intValue());
 //            todo test value
-            BusDetails.setBusId(i.intValue());
-            BusDetails.setBusType(2);
-            BusDetails.setBusNumber("dfsdf");
-            SharedPrefData.setBusname("testname");
-            SharedPrefData.setEmail("testmail");
-            editor.commit();
+                BusDetails.setBusId(i.intValue());
+                BusDetails.setBusType(2);
+                BusDetails.setBusNumber("dfsdf");
+                SharedPrefData.setBusname("testname");
+                SharedPrefData.setEmail("testmail");
+                editor.commit();
+            }
 
         }
         else {
@@ -154,6 +158,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     intent.putExtra("age",dps.getString("age"));
                                     intent.putExtra("institution",dps.getString("institution"));
                                     intent.putExtra("url",dps.getString("url"));
+                                    intent.putExtra("tripno",dps.getLong("tripno"));
+                                    intent.putExtra("document_id",dps.getId());
                                     startActivity(intent);
                                 }
 

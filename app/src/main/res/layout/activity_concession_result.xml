@@ -69,6 +69,7 @@
             android:layout_height="2dp"
             android:background="#B28D7B7B"/>
         <TextView
+            android:id="@+id/journey"
             android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="60dp"
