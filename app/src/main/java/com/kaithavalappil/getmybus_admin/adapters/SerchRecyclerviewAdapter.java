@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kaithavalappil.getmybus_admin.DataIntermediate.BusDetails;
 import com.kaithavalappil.getmybus_admin.DataIntermediate.SerchRecyclerLData;
 import com.kaithavalappil.getmybus_admin.R;
 import com.kaithavalappil.getmybus_admin.activities.NewrideConformation;
@@ -41,6 +42,10 @@ public class SerchRecyclerviewAdapter extends RecyclerView.Adapter<SerchRecycler
             @Override
             public void onClick(View v) {
 //                todo need to go to NewRideconfirmation activity
+                BusDetails.setSrc(data.get(position).getFrom());
+                BusDetails.setDest(data.get(position).getRouteName());
+                BusDetails.setSerchBId(data.get(position).getId());
+
                 context.startActivity(new Intent(context, NewrideConformation.class));
             }
         });

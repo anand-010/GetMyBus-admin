@@ -25,6 +25,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.kaithavalappil.getmybus_admin.DataIntermediate.BusDetails;
 import com.kaithavalappil.getmybus_admin.DataIntermediate.SoureDestPoint;
+import com.kaithavalappil.getmybus_admin.DataIntermediate.StopSize;
 import com.kaithavalappil.getmybus_admin.R;
 import com.kaithavalappil.getmybus_admin.utlils.NearestPoint;
 import com.kaithavalappil.getmybus_admin.helper.FirebaseDbNewRide;
@@ -165,7 +166,9 @@ public class New_Ride_Activity extends AppCompatActivity implements OnMapReadyCa
                     db.putData(polyline, stops_list,mysource,mydestination,"my places");
                 }
             BusDetails.setBusDetails(new GeoPoint(polyline.get(0).latitude(),polyline.get(0).longitude()));
-                startActivity(new Intent(New_Ride_Activity.this, NewrideConformation.class));
+            StopSize.setSize(stops_list.size());
+//                startActivity(new Intent(New_Ride_Activity.this, NewrideConformation.class));
+            startActivity(new Intent(New_Ride_Activity.this, InsertStopNames.class));
 //            todo need to add upload ith to database
         });
     }

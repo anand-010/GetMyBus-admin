@@ -11,6 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firestore.v1.Document;
 import com.kaithavalappil.getmybus_admin.DataIntermediate.BusDetails;
+import com.kaithavalappil.getmybus_admin.DataIntermediate.RouteId;
 import com.mapbox.geojson.Point;
 
 import java.nio.charset.Charset;
@@ -59,6 +60,8 @@ public class FirebaseDbNewRide {
         }
         database_refferance.add(user).addOnSuccessListener(documentReference -> {
             Toast.makeText(context,"database added successfully",Toast.LENGTH_SHORT).show();
+            RouteId.setRote_id(documentReference.getId());
+
         }).addOnFailureListener(e -> {
             Toast.makeText(context,"database adding failed",Toast.LENGTH_SHORT).show();
         });

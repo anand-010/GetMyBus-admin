@@ -1,5 +1,6 @@
 package com.kaithavalappil.getmybus_admin.activities;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
@@ -13,11 +14,15 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.kaithavalappil.getmybus_admin.DataIntermediate.BusDetails;
+import com.kaithavalappil.getmybus_admin.DataIntermediate.MainActicityContext;
 import com.kaithavalappil.getmybus_admin.DataIntermediate.SharedPrefData;
 import com.kaithavalappil.getmybus_admin.R;
+import com.kaithavalappil.getmybus_admin.activities.LoginActivities.LoginActivity;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -38,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Long i = getIntent().getLongExtra("value",1);
         scan_id = findViewById(R.id.scan_id);
         contact = findViewById(R.id.contact);
         create_ride = findViewById(R.id.create_ride);
@@ -50,27 +56,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         next_stop.setOnClickListener(this);
 //        adding shared prefference to main activity
         SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
-        int highScore = sharedPref.getInt("value", 1);
         int bus_id = sharedPref.getInt("busid", 1);
         String bus_name = sharedPref.getString("bus_name", "testname");
         String email = sharedPref.getString("email", "testmail");
         boolean first = sharedPref.getBoolean("first", true);
-        if (highScore ==1 && bus_id==1){
+        if (bus_id==1){
+            if (i == 1)
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt("value", 7894);
+            editor.putInt("value", i.intValue());
             editor.putBoolean("first", true);
-            editor.putInt("busid",640);
+            editor.putInt("busid",i.intValue());
 //            todo test value
-            BusDetails.setBusId(640);
+            BusDetails.setBusId(i.intValue());
             BusDetails.setBusType(2);
             BusDetails.setBusNumber("dfsdf");
             SharedPrefData.setBusname("testname");
             SharedPrefData.setEmail("testmail");
             editor.commit();
+
         }
         else {
             Toast.makeText(MainActivity.this,"already exist",Toast.LENGTH_SHORT).show();
-            Toast.makeText(MainActivity.this,String.valueOf(highScore)+ "  "+bus_id,Toast.LENGTH_SHORT).show();
 //            SharedPrefData.setBusid(bus_id);
             BusDetails.setBusId(bus_id);
             BusDetails.setBusType(2);
@@ -78,7 +85,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             SharedPrefData.setBusname(bus_name);
             SharedPrefData.setEmail(email);
         }
-
+////    todo delete it test down
+//        FirebaseFirestore d = FirebaseFirestore.getInstance();
+//        d.collection("test").addSnapshotListener(new EventListener<QuerySnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+//                Toast.makeText(MainActivity.this,String.valueOf(queryDocumentSnapshots.getDocuments().size()),Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     @Override

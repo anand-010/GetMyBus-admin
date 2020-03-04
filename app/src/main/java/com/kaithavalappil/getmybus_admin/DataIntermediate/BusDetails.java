@@ -9,6 +9,15 @@ public class BusDetails {
         BusDetails.busId = busId;
     }
 
+    public static String getSerchBId() {
+        return serchBId;
+    }
+
+    public static void setSerchBId(String serchBId) {
+        BusDetails.serchBId = serchBId;
+    }
+
+    private static String serchBId;
     private static int busId;
 
     public static void setBusNumber(String busNumber) {

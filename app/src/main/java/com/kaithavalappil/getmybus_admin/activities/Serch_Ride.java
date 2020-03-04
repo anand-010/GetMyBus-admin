@@ -22,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.kaithavalappil.getmybus_admin.DataIntermediate.BusDetails;
+import com.kaithavalappil.getmybus_admin.DataIntermediate.RouteId;
 import com.kaithavalappil.getmybus_admin.DataIntermediate.SerchRecyclerLData;
 import com.kaithavalappil.getmybus_admin.DataIntermediate.SoureDestPoint;
 import com.kaithavalappil.getmybus_admin.R;
@@ -56,15 +57,6 @@ public class Serch_Ride extends AppCompatActivity {
         serch_result = findViewById(R.id.serch_result_textview);
         progressBar = findViewById(R.id.serch_progressbar);
 //        todo need to do set the progressbar and the textview message
-        serchRecyclerLData.add(new SerchRecyclerLData("Route name : anand","From : alappuzha ", "To : Cherthala", "demo"));
-        serchRecyclerLData.add(new SerchRecyclerLData("Route name : anand","From : alappuzha ", "To : Cherthala", "demo"));
-        serchRecyclerLData.add(new SerchRecyclerLData("Route name : anand","From : alappuzha ", "To : Cherthala", "demo"));
-        serchRecyclerLData.add(new SerchRecyclerLData("Route name : anand","From : alappuzha ", "To : Cherthala", "demo"));
-        serchRecyclerLData.add(new SerchRecyclerLData("Route name : anand","From : alappuzha ", "To : Cherthala", "demo"));
-        serchRecyclerLData.add(new SerchRecyclerLData("Route name : anand","From : alappuzha ", "To : Cherthala", "demo"));
-        serchRecyclerLData.add(new SerchRecyclerLData("Route name : anand","From : alappuzha ", "To : Cherthala", "demo"));
-        serchRecyclerLData.add(new SerchRecyclerLData("Route name : anand","From : alappuzha ", "To : Cherthala", "demo"));
-        serchRecyclerLData.add(new SerchRecyclerLData("Route name : anand","From : alappuzha ", "To : Cherthala", "demo"));
         serchRecyclerLData.add(new SerchRecyclerLData("Route name : anand","From : alappuzha ", "To : Cherthala", "demo"));
         serchRecyclerviewAdapter = new SerchRecyclerviewAdapter(this,serchRecyclerLData);
         LinearLayoutManager lm = new LinearLayoutManager(this, RecyclerView.VERTICAL,false);
@@ -143,9 +135,10 @@ public class Serch_Ride extends AppCompatActivity {
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                         if (list.size()>0){
+                            serchRecyclerLData.clear();
                             for (DocumentSnapshot item : list){
-                                serchRecyclerLData.clear();
                                 serchRecyclerLData.add(new SerchRecyclerLData(item.getString("name"),item.getString("source_name") ,item.getString("dest_name"),item.getId()));
+                                RouteId.setRote_id(item.getId());
                                 serchRecyclerviewAdapter.notifyDataSetChanged();
                             }
                         }
@@ -159,9 +152,10 @@ public class Serch_Ride extends AppCompatActivity {
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                         if (list.size()>0){
+                            serchRecyclerLData.clear();
                             for (DocumentSnapshot item : list){
-                                serchRecyclerLData.clear();
                                 serchRecyclerLData.add(new SerchRecyclerLData(item.getString("name"),item.getString("source_name") ,item.getString("dest_name"),item.getId()));
+                                RouteId.setRote_id(item.getId());
                                 serchRecyclerviewAdapter.notifyDataSetChanged();
                             }
                         }
@@ -188,9 +182,10 @@ public class Serch_Ride extends AppCompatActivity {
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                         if (list.size()>0){
+                            serchRecyclerLData.clear();
                             for (DocumentSnapshot item : list){
-                                serchRecyclerLData.clear();
                                 serchRecyclerLData.add(new SerchRecyclerLData(item.getString("name"),item.getString("source_name") ,item.getString("dest_name"),item.getId()));
+                                RouteId.setRote_id(item.getId());
                                 serchRecyclerviewAdapter.notifyDataSetChanged();
                             }
                         }
@@ -202,9 +197,10 @@ public class Serch_Ride extends AppCompatActivity {
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                         if (list.size()>0){
+                            serchRecyclerLData.clear();
                             for (DocumentSnapshot item : list){
-                                serchRecyclerLData.clear();
                                 serchRecyclerLData.add(new SerchRecyclerLData(item.getString("name"),item.getString("source_name") ,item.getString("dest_name"),item.getId()));
+                                RouteId.setRote_id(item.getId());
                                 serchRecyclerviewAdapter.notifyDataSetChanged();
                             }
                         }

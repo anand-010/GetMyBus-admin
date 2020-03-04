@@ -105,6 +105,7 @@
                         android:layout_height="60dp"
                         android:src="@drawable/dotted_line"/>
                     <ImageView
+                        android:id="@+id/swap"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:src="@drawable/interchange"/>
